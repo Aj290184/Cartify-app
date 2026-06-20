@@ -7,20 +7,20 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Loading from "@/components/Loading";
 import toast from "react-hot-toast";
-import { getToken } from "@clerk/nextjs";
 import axios from "axios";
 
 const MyOrders = () => {
-  const { currency } = useAppContext();
+  const { currency, user, getToken } = useAppContext();
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchOrders = async () => {
     try {
-      const { token } = getToken();
-      const { data } = await axios.get("api/order/list", {
-        headers: { Authorization: `Bearer${token}` },
+      const token = await getToken();
+
+      const { data } = await axios.get("/api/order/list", {
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (data.success) {
@@ -32,6 +32,7 @@ const MyOrders = () => {
     } catch (error) {
       toast.error(error.message);
     }
+
     setLoading(false);
   };
 
@@ -47,6 +48,7 @@ const MyOrders = () => {
       <div className="flex flex-col justify-between px-6 md:px-16 lg:px-32 py-6 min-h-screen">
         <div className="space-y-5">
           <h2 className="text-lg font-medium mt-6">My Orders</h2>
+
           {loading ? (
             <Loading />
           ) : (
@@ -60,6 +62,8 @@ const MyOrders = () => {
                       className="max-w-16 max-h-16 object-cover"
                       src={assets.box_icon}
                       alt="box_icon"
+                      width={64}
+                      height={64}
                     />
                     <p className="flex flex-col gap-3">
                       <span className="font-medium text-base">
@@ -72,6 +76,7 @@ const MyOrders = () => {
                       <span>Items : {order.items.length}</span>
                     </p>
                   </div>
+
                   <div>
                     <p>
                       <span className="font-medium">
@@ -85,10 +90,12 @@ const MyOrders = () => {
                       <span>{order.address.phoneNumber}</span>
                     </p>
                   </div>
+
                   <p className="font-medium my-auto">
                     {currency}
                     {order.amount}
                   </p>
+
                   <div>
                     <p className="flex flex-col">
                       <span>Method : COD</span>
