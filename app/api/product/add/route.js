@@ -48,8 +48,8 @@ export async function POST(request) {
                 reject(error);
               } else {
                 resolve(result);
-			}
-		});
+              }
+            });
           stream.end(buffer);
         });
       })
