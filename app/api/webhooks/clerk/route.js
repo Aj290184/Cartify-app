@@ -6,28 +6,41 @@ export async function POST(req) {
   try {
     const payload = await req.json();
 
+    console.log("WEBHOOK HIT");
+    console.log("Event:", payload.type);
+    console.log("User ID:", payload.data?.id);
+    console.log(payload.data);
+
     await dbConnect();
+
+    const email = payload.data?.email_addresses?.[0]?.email_address || "";
+
+    const fullName = `${payload.data?.first_name || ""} ${
+      payload.data?.last_name || ""
+    }`.trim();
+
+    const name = fullName || email.split("@")[0] || "User";
 
     switch (payload.type) {
       case "user.created":
         await User.create({
           _id: payload.data.id,
-          name: `${payload.data.first_name || ""} ${
-            payload.data.last_name || ""
-          }`.trim(),
-          email: payload.data.email_addresses[0]?.email_address,
-          imageUrl: payload.data.image_url,
+          name,
+          email,
+          imageUrl: payload.data.image_url || "",
         });
         break;
 
       case "user.updated":
-        await User.findByIdAndUpdate(payload.data.id, {
-          name: `${payload.data.first_name || ""} ${
-            payload.data.last_name || ""
-          }`.trim(),
-          email: payload.data.email_addresses[0]?.email_address,
-          imageUrl: payload.data.image_url,
-        });
+        await User.findByIdAndUpdate(
+          payload.data.id,
+          {
+            name,
+            email,
+            imageUrl: payload.data.image_url || "",
+          },
+          { new: true }
+        );
         break;
 
       case "user.deleted":
@@ -43,7 +56,7 @@ export async function POST(req) {
       message: "Webhook processed successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.error("Webhook Error:", error);
 
     return NextResponse.json({
       success: false,
