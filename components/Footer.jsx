@@ -1,60 +1,70 @@
 import React from "react";
-import { assets } from "@/assets/assets";
-import Image from "next/image";
 
 const Footer = () => {
   return (
     <footer>
       <div className="flex flex-col md:flex-row items-start justify-center px-6 md:px-16 lg:px-32 gap-10 py-14 border-b border-gray-500/30 text-gray-500">
+        {/* Brand Info */}
         <div className="w-4/5">
-          <p className="mt-6 text-sm">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+          <h2 className="text-2xl font-semibold text-gray-900">Cartify</h2>
+
+          <p className="mt-6 text-sm leading-6">
+            Cartify is your trusted destination for quality products across
+            technology, fashion, and everyday essentials. We are committed to
+            delivering a seamless shopping experience with secure payments,
+            reliable service, and customer-first support.
           </p>
         </div>
 
+        {/* Company Links */}
         <div className="w-1/2 flex items-center justify-start md:justify-center">
           <div>
             <h2 className="font-medium text-gray-900 mb-5">Company</h2>
+
             <ul className="text-sm space-y-2">
               <li>
                 <a className="hover:underline transition" href="#">
                   Home
                 </a>
               </li>
+
               <li>
                 <a className="hover:underline transition" href="#">
-                  About us
+                  About Us
                 </a>
               </li>
+
               <li>
                 <a className="hover:underline transition" href="#">
-                  Contact us
+                  Contact Us
                 </a>
               </li>
+
               <li>
                 <a className="hover:underline transition" href="#">
-                  Privacy policy
+                  Privacy Policy
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
+        {/* Contact */}
         <div className="w-1/2 flex items-start justify-start md:justify-center">
           <div>
-            <h2 className="font-medium text-gray-900 mb-5">Get in touch</h2>
+            <h2 className="font-medium text-gray-900 mb-5">Get In Touch</h2>
+
             <div className="text-sm space-y-2">
-              <p>+1-234-567-890</p>
-              <p>contact@greatstack.dev</p>
+              <p>support@cartify.com</p>
+              <p>contact@cartify.com</p>
+              <p>Mon - Sat, 9:00 AM - 7:00 PM</p>
             </div>
           </div>
         </div>
       </div>
+
       <p className="py-4 text-center text-xs md:text-sm">
-        Copyright 2026 © Cartify All Right Reserved.
+        © 2026 Cartify. All rights reserved.
       </p>
     </footer>
   );

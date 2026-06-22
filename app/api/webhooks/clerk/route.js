@@ -6,11 +6,6 @@ export async function POST(req) {
   try {
     const payload = await req.json();
 
-    console.log("WEBHOOK HIT");
-    console.log("Event:", payload.type);
-    console.log("User ID:", payload.data?.id);
-    console.log(payload.data);
-
     await dbConnect();
 
     const email = payload.data?.email_addresses?.[0]?.email_address || "";
